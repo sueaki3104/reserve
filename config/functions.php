@@ -16,23 +16,7 @@ function connect_to_db()
     }
 }
 
-//ログインの有無を判断する関数を作成する．
-//関数の役割は
-//ログインしていない場合はログインページへ強制送還．
-//ログインしている場合は session_id を更新してセッション変数に保存する．
-//セッション変数には常に最新の session_id が入っている状態にする
-
-
-
-// function check_session_id()
-// {
-//   if (
-//     !isset($_SESSION["session_id"]) ||
-//     $_SESSION["session_id"] != session_id()
-//   ) {
-//     header("Location:web/admin_login.php");
-//   } else {
-//     session_regenerate_id(true);
-//     $_SESSION["session_id"] = session_id();
-//   }
+//引数で与えられた日付を表示形式に変換する 上手くいかない
+// function format_date($yyyymmdd){
+//     return date('j',strtotime$yyyymmdd);
 // }

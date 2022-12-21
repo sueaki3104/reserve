@@ -60,11 +60,36 @@ $stmt = $pdo->prepare($sql);
 // バインド変数を設定 PDO::PARAM_STR は「文字列だよ」って事。PDO::PARAM_INTは「数値だぜ」っていう意味。
 $stmt->bindValue(':reserve_date', $reserve_date, PDO::PARAM_STR);
 $stmt->bindValue(':reserve_time', $reserve_time, PDO::PARAM_STR);
-$stmt->bindValue(':reserve_num', $reserve_num, PDO::PARAM_STR);
+$stmt->bindValue(':reserve_num', $reserve_num, PDO::PARAM_INT);
 $stmt->bindValue(':name', $name, PDO::PARAM_STR);
 $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 $stmt->bindValue(':tel', $tel, PDO::PARAM_INT);
 $stmt->bindValue(':comment', $comment, PDO::PARAM_STR);
+
+//予約者にメール送信
+$from='From:Web予約システム';
+
+$subject = 'ご予約が確定しました。';
+$body = <<<EOT
+{$name}様
+
+以下の内容でご予約を承りました。
+
+ご予約内容詳細
+[日時]{$reserve_date}{$reserve_time}
+[人数]{$reserve_num}人
+[氏名]{$name}
+[メールアドレス]{$email}
+[電話番号]{$tel}
+[備考]{$comment}
+
+来院をお待ちしております。
+EOT;
+
+//メール送信テストはサーバーを使うようになってから
+mb_send_mail($email,$subject,$body,$from);
+
+
 // SQL実行（実行に失敗すると `sql error ...` が出力される）
 try {
   $status = $stmt->execute();
@@ -106,27 +131,27 @@ try {
         <tbody>
             <tr>
                 <th scope="row">日時</th>
-                <td>2022年12月22日(木)17時00分</td>
+                <td><?= $reserve_date?> <?= $reserve_time ?> </td>
             </tr>
             <tr>
                 <th scope="row">人数</th>
-                <td>４名</td>
+                <td><?= $reserve_num?></td>
             </tr>
             <tr>
                 <th scope="row">氏名</th>
-                <td colspan="2">織田信長</td>
+                <td colspan="2"><?= $name?></td>
             </tr>
             <tr>
                 <th scope="row">メールアドレス</th>
-                <td colspan="2">tenkafubu@oda.jp</td>
+                <td colspan="2"><?= $email?></td>
             </tr>
             <tr>
                 <th scope="row">電話番号</th>
-                <td colspan="2">000-000-0000</td>
+                <td colspan="2"><?= $tel?></td>
             </tr>
             <tr>
                 <th scope="row">備考欄</th>
-                <td colspan="2">人間50年、下天の内をくらぶれば、夢幻の如くなり</td>
+                <td colspan="2"><?= nl2br($comment)?></td>
             </tr>
         </tbody>
     </table>

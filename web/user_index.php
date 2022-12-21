@@ -43,13 +43,13 @@ include('../config/functions.php');
         
 
 //     //各入力値をセッション変数に保存する
-//     $_SESSION['RESERVE']['reserve_date'] = $reserve_date;
-//     $_SESSION['RESERVE']['reserve_num'] = $reserve_num;
-//     $_SESSION['RESERVE']['reserve_time'] = $reserve_time;
-//     $_SESSION['RESERVE']['name'] = $name;
-//     $_SESSION['RESERVE']['email'] = $email;
-//     $_SESSION['RESERVE']['tel'] = $tel;
-//     $_SESSION['RESERVE']['comment'] = $comment;
+    // $_SESSION['RESERVE']['reserve_date'] = $reserve_date;
+    // $_SESSION['RESERVE']['reserve_num'] = $reserve_num;
+    // $_SESSION['RESERVE']['reserve_time'] = $reserve_time;
+    // $_SESSION['RESERVE']['name'] = $name;
+    // $_SESSION['RESERVE']['email'] = $email;
+    // $_SESSION['RESERVE']['tel'] = $tel;
+    // $_SESSION['RESERVE']['comment'] = $comment;
 
 //     //予約確認画面へ変遷する
 //     header("Location:user_confirm.php");
