@@ -1,3 +1,87 @@
+<?php
+// POSTデータ確認
+// echo'<pre>';
+// var_dump($_POST);
+// echo'</pre>';
+// exit();
+session_start();
+include('../config/functions.php');
+
+// 入力チェック DBにデータを格納するときにはデータの欠損は許されない
+// そのため，ß以下の条件に合致する場合は以降の処理を中止してエラー画面を表示する．
+// 必須項目のデータが送信されていない．
+// 必須項目が空で送信されている はエラー
+if (
+  !isset($_POST['reserve_date']) || $_POST["reserve_date"]=='' ||
+  !isset($_POST['reserve_num']) || $_POST["reserve_num"]=='' ||
+  !isset($_POST['reserve_time']) || $_POST["reserve_time"]=='' ||
+  !isset($_POST['name']) || $_POST["name"]=='' ||
+  !isset($_POST['email']) || $_POST["email"]=='' ||
+  !isset($_POST['tel']) || $_POST["tel"]=='' ||
+  !isset($_POST['comment']) || $_POST["comment"]==''
+) {
+  exit('必要事項の入力がされていません');
+}
+// echo'<pre>';
+// var_dump($_POST);
+// echo'</pre>';
+// exit();
+// ここまでデータきている
+
+// データの受け取り
+$reserve_date = $_POST['reserve_date'];
+$reserve_num = $_POST['reserve_num'];
+$reserve_time = $_POST['reserve_time'];
+$name = $_POST['name'];
+$email = $_POST['email'];
+$tel = $_POST['tel'];
+$comment = $_POST['comment'];
+
+// echo'<pre>';
+// var_dump($_POST);
+// echo'</pre>';
+// exit();
+// ここまでデータきている
+
+// DBに接続するコードは決まっている（pdo）
+$pdo = connect_to_db();
+
+// SQL作成実行
+$sql = 'INSERT INTO reserve (id, reserve_date, reserve_time, reserve_num, name, email, tel, comment) 
+VALUES (NULL, :reserve_date, :reserve_time, :reserve_num, :name, :email, :tel, :comment)';
+
+// echo'<pre>';
+// var_dump($sql);
+// echo'</pre>';
+// exit();
+
+
+$stmt = $pdo->prepare($sql);
+// バインド変数を設定 PDO::PARAM_STR は「文字列だよ」って事。PDO::PARAM_INTは「数値だぜ」っていう意味。
+$stmt->bindValue(':reserve_date', $reserve_date, PDO::PARAM_STR);
+$stmt->bindValue(':reserve_time', $reserve_time, PDO::PARAM_STR);
+$stmt->bindValue(':reserve_num', $reserve_num, PDO::PARAM_STR);
+$stmt->bindValue(':name', $name, PDO::PARAM_STR);
+$stmt->bindValue(':email', $email, PDO::PARAM_STR);
+$stmt->bindValue(':tel', $tel, PDO::PARAM_INT);
+$stmt->bindValue(':comment', $comment, PDO::PARAM_STR);
+// SQL実行（実行に失敗すると `sql error ...` が出力される）
+try {
+  $status = $stmt->execute();
+} catch (PDOException $e) {
+  echo json_encode(["sql error" => "{$e->getMessage()}"]);
+  exit();
+}
+// データをcreateで保存したら、画面をinputに戻す
+header("Location:user_complete.php");
+exit();
+
+
+?>
+
+
+
+
 <!doctype html>
 <html lang="ja">
   <head>
