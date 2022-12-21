@@ -2,6 +2,60 @@
 session_start();
 include('../config/functions.php');
 
+// $err = array();
+
+// if($_SERVER['REQUEST_METHOD'] == 'POST'){
+//     //POSTからデータを受け取る
+//     $reserve_date = $_POST['reserve_date'];
+//     $reserve_num = $_POST['reserve_num'];
+//     $reserve_time = $_POST['reserve_time'];
+//     $name = $_POST['name'];
+//     $email = $_POST['email'];
+//     $tel = $_POST['tel'];
+//     $comment = $_POST['comment'];
+
+//     //各入力値のバリデーション
+//     if($reserve_date){
+//         $err['reserve_date'] = '予約日を入力してください。';
+//     }
+//     if($reserve_num){
+//         $err['reserve_num'] = '人数を入力してください。';
+//     }
+//     if($reserve_time){
+//         $err['reserve_time'] = '時間を入力してください。';
+//     }
+//     if($name){
+//         $err['name'] = '名前を入力してください。';
+//     }
+//     if($email){
+//         $err['email'] = 'メールアドレスを入力してください。';
+//     }
+//     if($tel){
+//         $err['tel'] = '電話番号を入力してください。';
+//     }
+//     if($comment){
+//         $err['comment'] = '備考欄を入力してください。';
+//     }
+
+//         //エラーがなければ次の処理に進む
+//         if(empty($err)){
+
+        
+
+//     //各入力値をセッション変数に保存する
+//     $_SESSION['RESERVE']['reserve_date'] = $reserve_date;
+//     $_SESSION['RESERVE']['reserve_num'] = $reserve_num;
+//     $_SESSION['RESERVE']['reserve_time'] = $reserve_time;
+//     $_SESSION['RESERVE']['name'] = $name;
+//     $_SESSION['RESERVE']['email'] = $email;
+//     $_SESSION['RESERVE']['tel'] = $tel;
+//     $_SESSION['RESERVE']['comment'] = $comment;
+
+//     //予約確認画面へ変遷する
+//     header("Location:user_confirm.php");
+//     exit();
+// }
+// }
 ?>
 
 
@@ -16,13 +70,13 @@ include('../config/functions.php');
     <!-- original CSS -->
     <link href="./css/style.css" rel="stylesheet">
 
-    <title>ご来店予約</title>
+    <title>診療予約</title>
   </head>
 
   <body>
     <header> スマイル歯科🦷 </header>
 
-    <h1>ご来店予約</h1>
+    <h1>診療予約</h1>
 
     <form class="m-3" action="./user_confirm.php" method="POST">
         <div class="mb-3">
@@ -89,7 +143,7 @@ include('../config/functions.php');
         </div>
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">【５】備考欄</label>
-            <textarea class="form-control" name="comment" rows="3" placeholder="備考欄"></textarea>
+            <textarea class="form-control" name="comment" rows="3" placeholder="痛みなどがあればお書きください（入力必須）"></textarea>
         </div>
         <div class="d-grid gap-2">
           <button class="btn btn-primary rounded-pill" type="submit">確認画面へ</button>

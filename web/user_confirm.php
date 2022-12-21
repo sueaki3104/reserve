@@ -73,8 +73,8 @@ try {
   exit();
 }
 // データをcreateで保存したら、画面をinputに戻す
-header("Location:user_complete.php");
-exit();
+// header("Location:user_complete.php");
+// exit();
 
 
 ?>
