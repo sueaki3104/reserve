@@ -8,7 +8,7 @@ define('DB_NAME','reserve');
 define('DB_USER','root');
 define('DB_PASSWORD','password');
 
-define('ADMIN_EMAIL','admin@example.com');
+define('ADMIN_EMAIL','satoshisueaki@gmail.com');
 
 
 mb_language('Japanese');

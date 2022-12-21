@@ -6,6 +6,7 @@
 // exit();
 session_start();
 include('../config/functions.php');
+include('../config/config.php');
 
 // 入力チェック DBにデータを格納するときにはデータの欠損は許されない
 // そのため，ß以下の条件に合致する場合は以降の処理を中止してエラー画面を表示する．
@@ -67,8 +68,7 @@ $stmt->bindValue(':tel', $tel, PDO::PARAM_INT);
 $stmt->bindValue(':comment', $comment, PDO::PARAM_STR);
 
 //予約者にメール送信
-$from='From:Web予約システム';
-
+$from='From:Web予約システム<'.ADMIN_EMAIL.'>';
 $subject = 'ご予約が確定しました。';
 $body = <<<EOT
 {$name}様
@@ -89,6 +89,23 @@ EOT;
 //メール送信テストはサーバーを使うようになってから
 mb_send_mail($email,$subject,$body,$from);
 
+//店舗管理者にメール送信
+$subject = '『店舗用』予約が確定しました。';
+$body = <<<EOT
+
+以下の内容で予約が確定しました。
+
+ご予約内容詳細
+[日時]{$reserve_date}{$reserve_time}
+[人数]{$reserve_num}人
+[氏名]{$name}
+[メールアドレス]{$email}
+[電話番号]{$tel}
+[備考]{$comment}
+EOT;
+
+//メール送信テストはサーバーを使うようになってから
+mb_send_mail(ADMIN_EMAIL,$subject,$body,$from);
 
 // SQL実行（実行に失敗すると `sql error ...` が出力される）
 try {
